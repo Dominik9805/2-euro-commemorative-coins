@@ -1,6 +1,13 @@
-Attribute VB_Name = "Modul1"
 
 Sub Update_Collection() 'Button: Update List
+
+'make sheet temporarily unprotected
+Dim ws As Worksheet
+Set ws = ThisWorkbook.Sheets("Commemorative Coins")
+    
+'no password
+ws.Unprotect Password:=""
+
 
 'Color_Commemorative Coins()
 
@@ -107,6 +114,9 @@ Loop
     
     
     Range("H9").Value = i & " of " & total
+    
+    'reactive protection
+        ws.Protect Password:="", UserInterfaceOnly:=True
 
 End Sub
 
@@ -124,7 +134,10 @@ Sub ListDuplicates() 'Button: Update Duplicates
     ' Source: "Commemorative Coins"
     Set wsSource = Worksheets("Commemorative Coins")
     
-    ' Target: "Duplicate" – create or empty
+    'make sheet temporarily unproteced
+    wsSource.Unprotect Password:=""
+    
+    ' Target: "Duplicate" â€“ create or empty
     On Error Resume Next
     Set wsTarget = Worksheets("Duplicates")
     If wsTarget Is Nothing Then
@@ -169,5 +182,10 @@ Sub ListDuplicates() 'Button: Update Duplicates
     End If
 
     MsgBox "Duplicates were updated", vbInformation
+    
+    'reactivate protection
+    wsSource.Protect Password:="", UserInterfaceOnly:=True
+    wsTarget.Protect Password:="", UserInterfaceOnly:=True
+    
 End Sub
 
